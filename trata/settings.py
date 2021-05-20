@@ -41,9 +41,14 @@ INSTALLED_APPS = [
     # allauth
     'allauth',
     'allauth.account',
+    # tailwind
+    'tailwind',
     # trata apps
     'timer',
+    'theme',
 ]
+
+TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
