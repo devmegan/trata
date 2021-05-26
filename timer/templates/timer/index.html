@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if not user.is_authenticated %}
+    <div class="text-center pt-20 text-gray-50">
+        <a class="text-5xl mb-10 block" href="/">🍅</a>
+        <p class="mb-10 text-2xl mb-10 w-1/2 mx-auto">Science proves that measuring time in tomatoes makes you more productive and more relaxed. This app can help you achieve that tomato-time success.</p>
+        <a class="rounded bg-green-300 text-base px-6 py-3 hover:bg-green-200 text-black mr-3" href="{% url 'account_login' %}">Log In</a>
+        <a class="rounded bg-green-300 text-base px-6 py-3 hover:bg-green-200 text-black" href="{% url 'account_signup' %}">Sign Up</a>
+    </div>
+    {% else %}
+    <div class="text-center mt-20 text-white">
+        <a class="text-5xl mb-10 block" href="/">🍅</a>
+        <p class="mb-5 text-2xl mb-16 w-1/2 mx-auto capitalize">Hi {{ user }}</p>
+        {% if not projects %}
+        <div id="content-wrapper" class="w-4/5 sm:w-3/4 md:w-1/2 lg:w-1/3 bg-red-500 mx-auto p-10 bg-opacity-70 text-center px-10 text-gray-50">
+            <p class="mb-5 text-xl mb-10 mx-auto">Enter a name for your project to get started:</p>
+            <form action="post" id="project-form">
+                {% csrf_token %}
+                <input class="rounded text-sm" type="text" id="projectName" placeholder="Project Name">
+                <button type="submit" class="mx-auto mt-5 rounded bg-green-300 text-sm px-6 py-2.5 hover:bg-green-200 text-black">Create Project</button>
+            </form>
+        </div>
+        {% else %}
+        {% for project in projects %}
+        <p>{{ project }}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endif %}
+{% endblock %}
+{% block extrajs %}
+{% endblock %}
