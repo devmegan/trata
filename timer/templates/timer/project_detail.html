@@ -6,43 +6,97 @@
         <div id="app-wrapper" class="w-4/5 sm:w-3/4 md:w-1/2 lg:w-1/3 bg-red-500 mx-auto p-10 bg-opacity-70 text-center px-10 text-gray-50">
           
                 <p class="mb-5 text-xl mb-10 mx-auto capitalize">{{ project }}</p>
-                <div>
-                {% for interval in intervals %}
-                🍅
-                {% endfor %}
-                </div>
-                    <!---
-                    <button v-if="!addingProject" @click="toggleAddProject()" class="rounded bg-green-100 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3" value="{{project.name}}">+ Add<button>
+                <div id="vue-app">
+                    <div id="timer" v-if="activeProject">
+                    <div class="text-5xl mb-5 tracking-tight">
+                        <span>[[minutes]]:[[seconds]]</span>
                     </div>
-                    <p class="mb-5 text-xl mb-10 mx-auto capitalize">Current Project: <u>[[ selectedProject ]]</u></p>
-                    <button @click="clearProject()" class=" rounded bg-green-100 text-xs px-6 py-1.5 hover:bg-green-200 text-black">Switch Project</button>
-                -->
+                    <div id="controls" class="text-lg mb-10">
+                        <button @click="pauseHandler()" v-if="timing && !paused" class="bg-white text-black rounded p-4">Pause</button>
+                        <button @click="pauseHandler()"  v-else-if="timing" class="bg-white text-black rounded p-4">Unpause</button>
+                    
+                        <button @click="timingStop()" v-if="timing" class="bg-white text-black rounded p-4">Stop</button>
+                        <button @click="timingStart()" v-else class="bg-white text-black rounded p-4">Start</button>
+                    </div>
+                    <div id="tratacount">
+                        <p class="mb-2">Tomato Count: </p>
+                        <span v-for="trata in trataCount">🍅</span>
+                        [[ trataCount ]]
+                    </div>
+                    </div>
+                </section>
+                <div>
+          
+                </div>
+                
         </div>
     </div>
 {% endblock %}
 {% block extrajs %}
-<!-- cdns -->
+<!--vue cdn-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-<!-- vue app -->
+<!--vue app-->
 <script>
     var app = new Vue({
-        delimiters: ["[[", "]]"],
-        el: '#vue-app',
-        data: {
-            selectedProject: null,
-            addingProject: false,
+    delimiters: ["[[", "]]"],
+    el: '#vue-app',
+    data: {
+        trataTime: (25 * 60),
+        trataCount: {{ intervals_count }},
+        timer: null,
+        timing: false,
+        paused: false,
+        activeProject: true,
+    }, 
+    methods: {
+        timingStop: function(){
+            this.timing = false;
+            this.paused = false;
+            if (this.trataTime === 0){
+                this.trataCount++;
+            }
+            clearInterval(this.timer)
+            this.trataTime = (25 * 60);
         },
-        methods: {
-            switchProject: function(){
-                this.selectedProject = event.target.value;
-            },
-            clearProject: function(){
-                this.selectedProject = null;
-            },
-            toggleAddProject: function(){
-                this.addingProject = !this.addingProject;
+        timingStart: function(){
+            this.timing = true;
+            // call countdown() every second
+            this.timer = setInterval(() => this.countdown(), 1000)
+        },
+        countdown: function(){
+            if (this.trataTime >= 1){
+                this.trataTime--;
+            } else {
+                this.trataTime = 0;
+                this.timingStop();
             }
         },
-    });
+        pauseHandler: function(){
+            this.paused = !this.paused;
+            if (this.paused){
+                clearInterval(this.timer);
+                this.timer = null;
+            } else {
+                this.timingStart();
+            }
+        },
+        timePad: function(time){
+            return (time < 10 ? '0' + time : time);
+        },
+        selectedProject: function(){
+            this.activeProject = event.target.value;
+        }
+    },
+    computed: {
+        minutes: function(){
+            const minutes = Math.floor(this.trataTime / 60);
+            return this.timePad(minutes)
+        },
+        seconds: function(){
+            const seconds = this.trataTime - (this.minutes * 60);
+            return this.timePad(seconds)
+        },
+    }
+    })
 </script>
 {% endblock %}

@@ -40,28 +40,4 @@
     {% endif %}
 {% endblock %}
 {% block extrajs %}
-<!-- cdns -->
-<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-<!-- vue app -->
-<script>
-    var app = new Vue({
-        delimiters: ["[[", "]]"],
-        el: '#vue-app',
-        data: {
-            selectedProject: null,
-            addingProject: false,
-        },
-        methods: {
-            switchProject: function(){
-                this.selectedProject = event.target.value;
-            },
-            clearProject: function(){
-                this.selectedProject = null;
-            },
-            toggleAddProject: function(){
-                this.addingProject = !this.addingProject;
-            }
-        },
-    });
-</script>
 {% endblock %}
