@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 
 from .models import Project
 from django.contrib.auth.models import User
@@ -38,3 +38,12 @@ def add_project(request):
         project.save()
     
     return redirect('index')
+
+def add_interval(request, project_id):
+    """ view increments project interval number """
+
+    project = get_object_or_404(Project, pk=project_id)
+    project.intervals += 1
+    project.save()
+    
+    return HttpResponse()

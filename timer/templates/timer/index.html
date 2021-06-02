@@ -24,9 +24,10 @@
                 </form>
             </div>
             {% else %}
-                <p class="mb-5 text-xl mb-10 mx-auto">Select a project to work on:</p>
+                <p class="mb-5 text-xl mb-10 mx-auto">Select a project to work on:</a>
                 {% for project in projects %}
-                    <a href="{% url 'project' project_id=project.id %}" class="capitalize rounded bg-green-300 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3">{{ project }}</a>
+                 <p class="mb-5 text-xl mb-10 mx-auto text-white inline-block">{{ project.name }}</p>
+                    <a href="{% url 'project' project_id=project.id %}" class="capitalize rounded bg-green-300 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3">Start </a>
                 {% endfor %}
                     <!---
                     <button v-if="!addingProject" @click="toggleAddProject()" class="rounded bg-green-100 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3" value="{{project.name}}">+ Add<button>

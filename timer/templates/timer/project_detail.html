@@ -33,16 +33,18 @@
     </div>
 {% endblock %}
 {% block extrajs %}
-<!--vue cdn-->
+<!--cdns-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!--vue app-->
 <script>
     var app = new Vue({
     delimiters: ["[[", "]]"],
     el: '#vue-app',
     data: {
-        trataTime: (25 * 60),
+        trataTime: (1 * 6),
         trataCount: {{ intervals_count }},
+        projectId: 1,
         timer: null,
         timing: false,
         paused: false,
@@ -53,7 +55,18 @@
             this.timing = false;
             this.paused = false;
             if (this.trataTime === 0){
-                this.trataCount++;
+                
+                // call incremenet interval here
+                axios({
+                method : "POST",
+                url:"{% url 'add_interval' project.id %}", //django path name
+                headers: {'X-CSRFTOKEN': '{{ csrf_token }}'},
+               
+                }).then(() => {
+                    this.trataCount++
+                })
+              
+
             }
             clearInterval(this.timer)
             this.trataTime = (25 * 60);
