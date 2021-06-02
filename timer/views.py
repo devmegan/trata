@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from .models import Project
+from .models import Project, Interval
 from django.contrib.auth.models import User
 
 def index(request):
@@ -11,6 +11,10 @@ def index(request):
 
     if request.user.is_authenticated: 
         projects = Project.objects.filter(user=request.user)
+
+        # attach completed intervals to each project 
+        for project in projects: 
+            project.intervals = Interval.objects.filter(project=project.id)
 
     context = {
         'projects': projects
