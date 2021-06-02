@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="text-center mt-20 text-white">
+        <a class="text-5xl mb-10 block inline-block" href="/">🍅</a>
+        <div id="app-wrapper" class="w-4/5 sm:w-3/4 md:w-1/2 lg:w-1/3 bg-red-500 mx-auto p-10 bg-opacity-70 text-center px-10 text-gray-50">
+          
+                <p class="mb-5 text-xl mb-10 mx-auto capitalize">{{ project }}</p>
+                <div>
+                {% for interval in intervals %}
+                🍅
+                {% endfor %}
+                </div>
+                    <!---
+                    <button v-if="!addingProject" @click="toggleAddProject()" class="rounded bg-green-100 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3" value="{{project.name}}">+ Add<button>
+                    </div>
+                    <p class="mb-5 text-xl mb-10 mx-auto capitalize">Current Project: <u>[[ selectedProject ]]</u></p>
+                    <button @click="clearProject()" class=" rounded bg-green-100 text-xs px-6 py-1.5 hover:bg-green-200 text-black">Switch Project</button>
+                -->
+        </div>
+    </div>
+{% endblock %}
+{% block extrajs %}
+<!-- cdns -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<!-- vue app -->
+<script>
+    var app = new Vue({
+        delimiters: ["[[", "]]"],
+        el: '#vue-app',
+        data: {
+            selectedProject: null,
+            addingProject: false,
+        },
+        methods: {
+            switchProject: function(){
+                this.selectedProject = event.target.value;
+            },
+            clearProject: function(){
+                this.selectedProject = null;
+            },
+            toggleAddProject: function(){
+                this.addingProject = !this.addingProject;
+            }
+        },
+    });
+</script>
+{% endblock %}

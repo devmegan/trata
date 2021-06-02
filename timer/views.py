@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .models import Project, Interval
 from django.contrib.auth.models import User
@@ -12,16 +12,25 @@ def index(request):
     if request.user.is_authenticated: 
         projects = Project.objects.filter(user=request.user)
 
-        # attach completed intervals to each project 
-        for project in projects: 
-            project.intervals = Interval.objects.filter(project=project.id)
-
     context = {
         'projects': projects
     }
 
     return render(request, 'timer/index.html', context)
 
+def project(request, project_id):
+
+    """ view returns details specific project """
+    
+    project = get_object_or_404(Project, pk=project_id)
+    intervals = Interval.objects.filter(project=project_id)
+    print(intervals)
+    context = {
+        'project': project,
+        'intervals': intervals
+    }
+    
+    return render(request, 'timer/project_detail.html', context)
 
 def add_project(request):
 
@@ -32,4 +41,3 @@ def add_project(request):
         project.save()
     
     return redirect('index')
-

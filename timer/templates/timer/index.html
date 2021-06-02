@@ -24,20 +24,17 @@
                 </form>
             </div>
             {% else %}
-            <section id="vue-app">
-                <div v-if="!selectedProject">
-                    <p class="mb-5 text-xl mb-10 mx-auto">Select a project to work on:</p>
-                    {% for project in projects %}
-                    <button @click="switchProject()" class="capitalize rounded bg-green-300 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3" value="{{project.name}}">{{project}}</button>
-                    {% endfor %}
+                <p class="mb-5 text-xl mb-10 mx-auto">Select a project to work on:</p>
+                {% for project in projects %}
+                    <a href="{% url 'project' project_id=project.id %}" class="capitalize rounded bg-green-300 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3">{{ project }}</a>
+                {% endfor %}
+                    <!---
                     <button v-if="!addingProject" @click="toggleAddProject()" class="rounded bg-green-100 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3" value="{{project.name}}">+ Add<button>
                     </div>
-                <div v-else>
                     <p class="mb-5 text-xl mb-10 mx-auto capitalize">Current Project: <u>[[ selectedProject ]]</u></p>
                     <button @click="clearProject()" class=" rounded bg-green-100 text-xs px-6 py-1.5 hover:bg-green-200 text-black">Switch Project</button>
-                </div>
-            </section>
-            {% endif %}
+                -->
+                    {% endif %}
         </div>
     </div>
     {% endif %}
