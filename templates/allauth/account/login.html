@@ -1,0 +1,27 @@
+{% extends "account/base.html" %}
+{% block allauth_inner_content %}
+<h1 class="text-3xl mb-10">Log In</h1>
+<form class="text-black font-mono mb-10" method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    <div class="mb-5">
+        {{ form.login }}
+    </div>
+    <div class="mb-5">
+        {{ form.password}}
+    </div>
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <!-- Display Log In Errors -->
+    {% if form.errors %}
+    <div class="mb-5 text-white py-5 bg-red-600">
+    {% for key, value in form.errors.items %}
+        {{ value }}
+    {% endfor %}
+    </div>
+    {% endif %}
+  <button class="rounded bg-green-200 px-20 py-2 hover:bg-green-100" type="submit">Log In</button>
+</form>
+<p>Forgotten password? <a href="{% url 'account_reset_password' %}" class="underline text-green-200 hover:text-green-100">Reset it</a></p>
+<p>Don't have an account yet? <a href="{{ signup_url }}" class="text-green-200 hover:text-green-100 underline">Sign Up</a></p>
+{% endblock %}

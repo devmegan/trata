@@ -12,16 +12,17 @@
                         <span>[[minutes]]:[[seconds]]</span>
                     </div>
                     <div id="controls" class="text-lg mb-10">
-                        <button @click="pauseHandler()" v-if="timing && !paused" class="bg-white text-black rounded p-4">Pause</button>
-                        <button @click="pauseHandler()"  v-else-if="timing" class="bg-white text-black rounded p-4">Unpause</button>
+                        <button @click="pauseHandler()" v-if="timing && !paused" class="mx-auto mt-5 rounded bg-green-200 text-sm px-6 py-2.5 hover:bg-green-100 text-black focus:outline-none">Pause</button>
+                        <button @click="pauseHandler()"  v-else-if="timing" class="mx-auto mt-5 rounded bg-green-200 text-sm px-6 py-2.5 hover:bg-green-100 text-black focus:outline-none">Unpause</button>
                     
-                        <button @click="timingStop()" v-if="timing" class="bg-white text-black rounded p-4">Stop</button>
-                        <button @click="timingStart()" v-else class="bg-white text-black rounded p-4">Start</button>
+                        <button @click="timingStop()" v-if="timing" class="mx-auto mt-5 rounded bg-green-200 text-sm px-6 py-2.5 hover:bg-green-100 text-black focus:outline-none">Stop</button>
+                        <button @click="timingStart()" v-else class="mx-auto mt-5 rounded bg-green-200 text-sm px-6 py-2.5 hover:bg-green-100 text-black focus:outline-none">Start</button>
                     </div>
                     <div id="tratacount">
                         <p class="mb-2">Tomato Count: </p>
                         <span v-for="trata in trataCount">🍅</span>
-                        [[ trataCount ]]
+                        <p class="mt-2">[[ trataCount * 25 ]] minutes total</p>
+                        <p><small>([[ trataCount ]] x 25 minutes)</small></p>
                     </div>
                     </div>
                 </section>
@@ -42,7 +43,7 @@
     delimiters: ["[[", "]]"],
     el: '#vue-app',
     data: {
-        trataTime: (1 * 6),
+        trataTime: (25 * 60),
         trataCount: {{ intervals_count }},
         projectId: 1,
         timer: null,

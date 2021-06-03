@@ -17,24 +17,20 @@
             <div id="start-project">
                 <p class="mb-5 text-2xl mb-16 w-1/2 mx-auto capitalize">Hi {{ user }}</p>
                 <p class="mb-5 text-xl mb-10 mx-auto">Enter a name for your project to get started:</p>
-                <form action="{% url 'add_project' %}" id="project-form" method="POST">
-                    {% csrf_token %}
-                    <input class="rounded text-sm" type="text" id="projectName" name="projectName" placeholder="Project Name">
-                    <button type="submit" class="mx-auto mt-5 rounded bg-green-300 text-sm px-6 py-2.5 hover:bg-green-200 text-black">Create Project</button>
-                </form>
+                
             </div>
             {% else %}
                 <p class="mb-5 text-xl mb-10 mx-auto">Select a project to work on:</a>
                 {% for project in projects %}
                  <p class="mb-5 text-xl mb-10 mx-auto text-white inline-block">{{ project.name }}</p>
                     <a href="{% url 'project' project_id=project.id %}" class="capitalize rounded bg-green-300 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3">Start </a>
-                {% endfor %}
-                    <!---
-                    <button v-if="!addingProject" @click="toggleAddProject()" class="rounded bg-green-100 text-base px-6 py-1.5 hover:bg-green-200 text-black mr-3" value="{{project.name}}">+ Add<button>
-                    </div>
-                    <p class="mb-5 text-xl mb-10 mx-auto capitalize">Current Project: <u>[[ selectedProject ]]</u></p>
-                    <button @click="clearProject()" class=" rounded bg-green-100 text-xs px-6 py-1.5 hover:bg-green-200 text-black">Switch Project</button>
-                -->
+
+                    {% endfor %}
+                    <form action="{% url 'add_project' %}" id="project-form" method="POST">
+                    {% csrf_token %}
+                    <input class="rounded text-sm text-black" type="text" id="projectName" name="projectName" placeholder="Project Name">
+                    <button type="submit" class="mx-auto mt-5 rounded bg-green-300 text-sm px-6 py-2.5 hover:bg-green-200 text-black">Create Project</button>
+                </form>
                     {% endif %}
         </div>
     </div>
